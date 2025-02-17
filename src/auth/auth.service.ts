@@ -15,7 +15,7 @@ export class AuthService {
   ) {}
 
   async signUp(signupDto: SignUpDto) {
-    const { firstName, lastName, email, password, birthDate } = signupDto;
+    const { firstName, lastName, email, password, birthDate, role } = signupDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await this.userModel.create({
@@ -24,6 +24,7 @@ export class AuthService {
       email,
       password: hashedPassword,
       birthDate,
+      role: role,
     });
 
     await user.save();

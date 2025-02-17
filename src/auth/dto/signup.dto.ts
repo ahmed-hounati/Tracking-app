@@ -17,7 +17,9 @@ export class SignUpDto {
   @IsNotEmpty()
   password: string;
 
-  @Type(() => Date) // Automatically converts string to Date
+  @Type(() => Date)
   @IsDate()
   birthDate: Date;
+
+  role?: string;
 }
