@@ -35,7 +35,7 @@ export class AuthService {
     return { token };
   }
 
-  async login(signInDto: SignInDto) {
+  async signin(signInDto: SignInDto) {
     const { email, password } = signInDto;
     const user = await this.userModel.findOne({
       email,
@@ -45,7 +45,10 @@ export class AuthService {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch)
       throw new UnauthorizedException('invalid email or password');
-    const token = this.jwtService.sign({ id: user.id, email: user.email });
+    const token = this.jwtService.sign(
+      { id: user.id, email: user.email },
+      { secret: process.env.JWT_SECRET },
+    );
     return { token };
   }
 }
