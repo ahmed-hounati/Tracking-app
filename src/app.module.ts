@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot('mongodb://localhost:27017/tracking'),
     UserModule,
     AuthModule,
+    LocationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
