@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LocationModule } from './location/location.module';
+import { HistoriqModule } from './historiq/historiq.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { LocationModule } from './location/location.module';
     UserModule,
     AuthModule,
     LocationModule,
+    HistoriqModule,
   ],
   controllers: [AppController],
   providers: [AppService],

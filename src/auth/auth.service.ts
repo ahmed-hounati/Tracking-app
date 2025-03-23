@@ -29,11 +29,13 @@ export class AuthService {
 
     await user.save();
 
+    const id = user?.id;
+
     const token = this.jwtService.sign(
       { id: user.id, email: user.email },
       { secret: process.env.JWT_SECRET },
     );
-    return { token };
+    return { id, token };
   }
 
   async signin(signInDto: SignInDto) {
@@ -41,6 +43,8 @@ export class AuthService {
     const user = await this.userModel.findOne({
       email,
     });
+
+    const id = user?.id;
 
     if (!user) throw new UnauthorizedException('invalid email or password');
     const passwordMatch = await bcrypt.compare(password, user.password);
@@ -50,6 +54,6 @@ export class AuthService {
       { id: user.id, email: user.email },
       { secret: process.env.JWT_SECRET },
     );
-    return { token };
+    return { id, token };
   }
 }
