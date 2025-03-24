@@ -15,17 +15,22 @@ export class LocationService {
     userId: string,
     locationDto: LocationDto,
   ): Promise<Location> {
-    console.log(locationDto.coordinates);
-    
-    const location = await this.locationModel.create({
-      userId: userId,
-      coordinates: {
-        lat: locationDto.coordinates.lat,
-        lng: locationDto.coordinates.lng,
-      },
-      timestamp: locationDto.timestamp,
-    });
+    const existingLocation = await this.locationModel.findOne({ userId });
 
-    return location;
+    if (existingLocation) {
+      existingLocation.longitude = locationDto.longitude;
+      existingLocation.latitude = locationDto.latitude;
+      return await existingLocation.save();
+    } else {
+      return await this.locationModel.create({
+        userId,
+        longitude: locationDto.longitude,
+        latitude: locationDto.latitude,
+        timestamp: locationDto.timestamp,
+      });
+    }
+  }
+  async getLocationByUserId(userId: string): Promise<Location | null> {
+    return await this.locationModel.findOne({ userId: userId });
   }
 }

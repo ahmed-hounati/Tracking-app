@@ -6,8 +6,11 @@ export class Location {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userId: string;
 
-  @Prop({ required: true, type: Object })
-  coordinates: { lat: number; lng: number };
+  @Prop({ required: true, type: Number })
+  latitude: number;
+
+  @Prop({ required: true, type: Number })
+  longitude: number;
 }
 
 export const LocationSchema = SchemaFactory.createForClass(Location);
