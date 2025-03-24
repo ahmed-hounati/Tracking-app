@@ -15,15 +15,26 @@ export class HistoriqService {
     createHistoriqDto: CreateHistoriqDto,
   ): Promise<Historiq> {
     const { searchedUserId, latitude, longitude } = createHistoriqDto;
-
-    const newSearch = new this.historiqModel({
+    const existingHistoriq = await this.historiqModel.findOne({
       userId,
       searchedUserId,
       latitude,
       longitude,
     });
 
-    return await newSearch.save();
+    if (existingHistoriq) {
+      await this.historiqModel.findByIdAndUpdate(
+        existingHistoriq._id,
+        { updatedAt: new Date() },
+        { new: true },
+      );
+    }
+    return await this.historiqModel.create({
+      userId,
+      searchedUserId,
+      latitude,
+      longitude,
+    });
   }
 
   async getUserHistory(userId: string): Promise<any[]> {
