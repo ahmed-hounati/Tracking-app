@@ -10,8 +10,15 @@ import { HistoriqModule } from './historiq/historiq.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://localhost:27017/tracking'),
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+
+    MongooseModule.forRoot(
+      process.env.MONGODB_URI || 'mongodb://mongodb:27017/tracking',
+    ),
+
     UserModule,
     AuthModule,
     LocationModule,
