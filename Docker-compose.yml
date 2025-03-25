@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: tracking-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - docker.env
+    depends_on:
+      - mongoDB
+    networks:
+      - mynetwork
+
+  mongoDB:
+    image: mongo:5.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
